@@ -28,10 +28,10 @@
                 Новый кандидат.
             </div>
             <div class="card-body">
-                <form>
+                <form action="<%=request.getContextPath()%>/candidate/save" method="post">
                     <div class="from-group">
                         <label>Имя</label>
-                        <input type="text" class="from-control">
+                        <input type="text" class="from-control" name="name">
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>
