@@ -61,4 +61,8 @@ public class Store {
     public Candidate canFindById(int id) {
         return candidates.get(id);
     }
+
+    public void deleteCandidate(int id) {
+        candidates.remove(id);
+    }
 }

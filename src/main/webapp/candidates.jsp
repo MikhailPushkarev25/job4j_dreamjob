@@ -33,6 +33,8 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
+                        <th scope="col">Добавить</th>
+                        <th scope="col">Удалить</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,6 +46,13 @@
                                 </a>
                                 <c:out value="${candidate.name}"/>
                             </td>
+                            <td><img src="<c:url value='/download?id=${can.id}'/>" width="100px" height="100px"/></td>
+                            <td>
+                                <a href="<c:url value='/upload?id=${can.id}'/>">
+                                    <i class="fa fa-camera"></i>
+                                </a>
+                            </td>
+                            <td><a href="<c:url value='/delete?id=${can.id}'/>">Удалить</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
