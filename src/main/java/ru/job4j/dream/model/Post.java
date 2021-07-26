@@ -5,8 +5,6 @@ import java.util.Objects;
 public class Post {
     private int id;
     private String name;
-    private String description;
-    private String created;
 
     public Post(int id, String name) {
         this.id = id;
@@ -29,22 +27,6 @@ public class Post {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCreated() {
-        return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -55,13 +37,19 @@ public class Post {
         }
         Post post = (Post) o;
         return id == post.id
-                && Objects.equals(name, post.name)
-                && Objects.equals(description, post.description)
-                && Objects.equals(created, post.created);
+                && Objects.equals(name, post.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, created);
+        return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{"
+                + "id=" + id
+                + ", name='" + name
+                + '}';
     }
 }
