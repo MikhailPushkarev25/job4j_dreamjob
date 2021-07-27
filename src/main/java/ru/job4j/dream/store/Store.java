@@ -17,4 +17,6 @@ public interface Store {
     Post findById(int id) throws SQLException;
 
     void canSave(Candidate candidate);
+
+    Candidate canFindById(int id);
 }
