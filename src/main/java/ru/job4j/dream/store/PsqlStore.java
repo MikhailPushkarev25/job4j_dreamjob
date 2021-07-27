@@ -55,7 +55,7 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public Collection<Post> findAllPosts() throws SQLException {
+    public Collection<Post> findAllPosts() {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM post")
@@ -72,7 +72,7 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public Collection<Candidate> findAllCandidates() throws SQLException {
+    public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate")
