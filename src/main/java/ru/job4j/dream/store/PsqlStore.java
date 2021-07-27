@@ -1,6 +1,7 @@
 package ru.job4j.dream.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
@@ -14,9 +15,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
+import org.slf4j.Logger;
 
 public class PsqlStore implements Store {
+
     private final BasicDataSource pool = new BasicDataSource();
+
+    private final static Logger LOG = LoggerFactory.getLogger(PsqlStore.class.getName());
 
     private PsqlStore() {
         Properties cfg = new Properties();
@@ -25,7 +30,7 @@ public class PsqlStore implements Store {
         )) {
             cfg.load(io);
         } catch (Exception e) {
-            e.printStackTrace();
+           LOG.error("Exception in log", e);
         }
         try {
             Class.forName(cfg.getProperty("jdbc.driver"));
@@ -59,9 +64,9 @@ public class PsqlStore implements Store {
                 while (it.next()) {
                     posts.add(new Post(it.getInt("id"), it.getString("name")));
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+            } catch (Exception e) {
+           LOG.error("Exception in log ", e);
         }
         return posts;
     }
@@ -76,9 +81,9 @@ public class PsqlStore implements Store {
                 while (it.next()) {
                     candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            LOG.error("Exception in log ", e);
         }
         return candidates;
     }
@@ -114,7 +119,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception in log ", e);
         }
         return post;
     }
@@ -133,7 +138,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception in log ", e);
         }
         return candidate;
     }
@@ -147,7 +152,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, post.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception in log ", e);
         }
     }
 
@@ -160,7 +165,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, candidate.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+           LOG.error("Exception in log ", e);
         }
     }
 
@@ -172,11 +177,11 @@ public class PsqlStore implements Store {
         ) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+                if (rs.next()) {
                     post = new Post(rs.getInt("id"), rs.getString("name"));
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+               LOG.error("Exception in log ", e);
             }
         }
         return post;
@@ -189,12 +194,12 @@ public class PsqlStore implements Store {
         ) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+                if (rs.next()) {
                     candidate = new Candidate(rs.getInt("id"), rs.getString("name"));
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           LOG.error("Exception in log ", e);
         }
         return candidate;
     }
