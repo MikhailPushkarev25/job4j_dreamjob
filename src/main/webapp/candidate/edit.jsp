@@ -22,7 +22,7 @@
 </head>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0,"");
+    Candidate candidate = new Candidate(0, "");
     if (id != null) {
         candidate = PsqlStore.instOf().canFindById(Integer.parseInt(id));
     }
@@ -32,26 +32,16 @@
     <div class="row">
         <div class="row">
             <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/candidate/candidates.do">Кандидаты</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/index.jsp"> На главную</a>
-                </li>
+
             </ul>
         </div>
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Новый кандидат.
+                <% if (id == null) { %>
+                Новая вакансия.
+                <% } else { %>
+                Редактирование вакансии.
+                <% } %>
             </div>
             <div class="card-body">
                     <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">

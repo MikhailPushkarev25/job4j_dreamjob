@@ -21,23 +21,6 @@
 <body>
 <div class="container pt-3">
     <div class="row">
-        <div class="row">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> |
-                        Выйти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/index.jsp"> На главную</a>
-                </li>
-            </ul>
-        </div>
         <div class="card" style="width: 100%">
             <div class="card-header">
                 Кандидаты
@@ -60,13 +43,13 @@
                                 </a>
                                 <c:out value="${candidate.name}"/>
                             </td>
-                            <td><img src="<c:url value='/download?id=${can.id}'/>" width="100px" height="100px"/></td>
+                            <td><img src="<c:url value='/download?id=${candidate.id}'/>" width="100px" height="100px"/></td>
                             <td>
-                                <a href="<c:url value='/upload?id=${can.id}'/>">
+                                <a href="<c:url value='/upload?id=${candidate.id}'/>">
                                     <i class="fa fa-camera"></i>
                                 </a>
                             </td>
-                            <td><a href="<c:url value='/delete?id=${can.id}'/>">Удалить</a></td>
+                            <td><a href="<c:url value='/delete?id=${candidate.id}'/>">Удалить</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
