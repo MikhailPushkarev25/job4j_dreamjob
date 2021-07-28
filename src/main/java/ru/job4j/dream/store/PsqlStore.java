@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import org.slf4j.Logger;
+import ru.job4j.dream.model.User;
 
 public class PsqlStore implements Store {
 
@@ -202,5 +203,79 @@ public class PsqlStore implements Store {
            LOG.error("Exception in log ", e);
         }
         return candidate;
+    }
+
+    @Override
+    public Collection<User> findAllUsers() {
+        List<User> users = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM user")
+        ) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    users.add(new User(rs.getInt("id"), rs.getString("name")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception in log ", e);
+        }
+        return users;
+    }
+
+    @Override
+    public void userSave(User user) {
+        if (user.getId() == 0) {
+            usCreate(user);
+        } else {
+            usUpdate(user);
+        }
+    }
+
+    @Override
+    public User usFindById(int id) {
+        User user = null;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM user WHERE id = (?)")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    user = new User(rs.getInt("id"), rs.getString("name"));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception in log ", e);
+        }
+        return user;
+    }
+
+    public void usUpdate(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("UPDATE user SET name = (?) WHERE id = (?)")
+        ) {
+            ps.setInt(1, user.getId());
+            ps.setString(2, user.getName());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            LOG.error("Exception in log ", e);
+        }
+    }
+
+    public User usCreate(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, user.getName());
+            ps.execute();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    user.setId(rs.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception in log ", e);
+        }
+        return user;
     }
 }
