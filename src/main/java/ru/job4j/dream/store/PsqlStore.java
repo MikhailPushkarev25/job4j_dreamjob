@@ -213,7 +213,11 @@ public class PsqlStore implements Store {
         ) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    users.add(new User(rs.getInt("id"), rs.getString("name")));
+                    users.add(new User(rs.getInt("id"), 
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password")
+                            ));
                 }
             }
         } catch (Exception e) {
@@ -240,7 +244,11 @@ public class PsqlStore implements Store {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    user = new User(rs.getInt("id"), rs.getString("name"));
+                    user = new User(rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("email"),
+                            rs.getString("password")
+                    );
                 }
             }
         } catch (Exception e) {
@@ -251,10 +259,14 @@ public class PsqlStore implements Store {
 
     public void usUpdate(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE user SET name = (?) WHERE id = (?)")
-        ) {
+             PreparedStatement ps =
+                     cn.prepareStatement(
+                             "UPDATE user SET name = (?), email = (?), "
+                                     + "password = (?) WHERE id = (?)")) {
             ps.setInt(1, user.getId());
             ps.setString(2, user.getName());
+            ps.setString(3, user.getName());
+            ps.setString(4, user.getName());
             ps.executeUpdate();
         } catch (Exception e) {
             LOG.error("Exception in log ", e);
@@ -263,14 +275,36 @@ public class PsqlStore implements Store {
 
     public User usCreate(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
+             PreparedStatement ps =
+                     cn.prepareStatement("INSERT INTO post(name, email, password) VALUES (?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
             ps.execute();
             try (ResultSet rs = ps.getGeneratedKeys()) {
                 if (rs.next()) {
                     user.setId(rs.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception in log ", e);
+        }
+        return user;
+    }
+
+    public User findByEmail(String email) {
+        User user = null;
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM user WHERE email = (?)")
+        ) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                  user = new User(rs.getInt("id"),
+                          rs.getString("name"),
+                          rs.getString("email"),
+                          rs.getString("password"));
                 }
             }
         } catch (Exception e) {

@@ -31,9 +31,9 @@ public class MemStore implements Store {
         candidates.put(1, new Candidate(1, "Junior Java"));
         candidates.put(2, new Candidate(2, "Middle Java"));
         candidates.put(3, new Candidate(3, "Senior Java"));
-        users.put(1, new User(1, "Mike"));
-        users.put(2, new User(2, "Lora"));
-        users.put(3, new User(3, "Frank"));
+        users.put(1, new User(1, "Mike", "Log@mail", "123"));
+        users.put(2, new User(2, "Lora", "lor@ref", "lora"));
+        users.put(3, new User(3, "Frank", "fr@log", "frank"));
     }
 
     public static MemStore instOf() {
@@ -87,6 +87,16 @@ public class MemStore implements Store {
     @Override
     public User usFindById(int id) {
         return users.get(id);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        for (User user : users.values()) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public void deleteCandidate(int id) {
