@@ -23,6 +23,18 @@
                alert($('description').attr('description'));
            }
         }
+
+        function addRow() {
+            //получаем значение поля usr
+            const name = $('name').val();
+            const surname = $('surname').val();
+            const sex = $('sex').val();
+            const description = $('description').val();
+
+            //Получаем ссылку на последний элемент в таблице
+            //и после него добавляем html
+            $('#table tr:last').after('<tr><td>' + name + '</td><td>' + surname + '</td><td>' + sex + '</td><td>' + description + '</td></tr>');
+        }
     </script>
 </head>
 <body>
@@ -51,7 +63,7 @@
     </div>
     <button type="button" class="btn btn-default" onclick="return validate();">Отправить</button>
 </form>
-<table class="table">
+<table class="table" id="table">
     <thead>
     <tr>
         <th scope="col">#</th>
@@ -80,6 +92,7 @@
         <td>@twitter</td>
     </tr>
     </tbody>
+    <button type="button" class="btn btn-default" onclick="addRow()">Add row</button>
 </table>
 </body>
 </html>
