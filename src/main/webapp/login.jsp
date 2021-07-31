@@ -62,16 +62,20 @@
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary">Войти</button>
-                    <c:if test="${not empty error}">
+                    <c:if test="${requestScope.error != null}">
                         <div style="color:red; font-weight: bold; margin: 30px 0;">
-                            <c:out value="${error}"/>
+                            <c:out value="${requestScope.error}"/>
                         </div>
                     </c:if>
 
                 </form>
+                <br>
+                <a href="<%=request.getContextPath()%>/reg.jsp" class="btn btn-success" role="button">
+                    Регистрация
+                </a>
             </div>
         </div>
     </div>

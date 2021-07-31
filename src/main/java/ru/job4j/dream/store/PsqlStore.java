@@ -209,7 +209,7 @@ public class PsqlStore implements Store {
     public Collection<User> findAllUsers() {
         List<User> users = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM user")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users")
         ) {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -239,7 +239,7 @@ public class PsqlStore implements Store {
     public User usFindById(int id) {
         User user = null;
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM user WHERE id = (?)")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE id = (?)")
         ) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -261,7 +261,7 @@ public class PsqlStore implements Store {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =
                      cn.prepareStatement(
-                             "UPDATE user SET name = (?), email = (?), "
+                             "UPDATE users SET name = (?), email = (?), "
                                      + "password = (?) WHERE id = (?)")) {
             ps.setInt(1, user.getId());
             ps.setString(2, user.getName());
@@ -276,7 +276,7 @@ public class PsqlStore implements Store {
     public User usCreate(User user) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =
-                     cn.prepareStatement("INSERT INTO post(name, email, password) VALUES (?, ?, ?)",
+                     cn.prepareStatement("INSERT INTO users(name, email, password) VALUES (?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, user.getName());
@@ -297,7 +297,7 @@ public class PsqlStore implements Store {
     public User findByEmail(String email) {
         User user = null;
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM user WHERE email = (?)")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM users WHERE email = (?)")
         ) {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
