@@ -48,50 +48,28 @@
         <label for="surname">Фамилия</label>
         <input type="text" class="form-control" id="surname" title="Введите Фамилию" placeholder="Заполните поле фамилия">
     </div>
-    <div class="custom-control custom-checkbox">
-        <label for="sex">Пол</label>
-        <input type="checkbox" class="custom-control-input" id="sex" title="Укажите пол" disabled>
-        <label class="custom-control-label" for="sex">Мужской</label>
-    </div>
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="customCheckDisabled2" title="Укажите пол" disabled>
-        <label class="custom-control-label" for="sex">Женский</label>
+    <div class="form-group">
+        <label for="inputSex" class="col-sm-2 col-form-label">Пол</label>
+        <select class="form-control" id="inputSex">
+            <option>Мужской</option>
+            <option>Женский</option>
+        </select>
     </div>
     <div class="form-group">
-        <label for="description">Описание</label>
-        <textarea class="form-control" id="description" title="Укажите описание" rows="3"></textarea>
+        <label for="inputDescription" class="col-sm-2 col-form-label">Описание</label>
+        <textarea class="form-control" id="inputDescription" rows="3" title="Описание"></textarea>
     </div>
     <button type="button" class="btn btn-default" onclick="return validate();">Отправить</button>
 </form>
 <table class="table" id="table">
     <thead>
     <tr>
-        <th scope="col">#</th>
+        <th scope="col"id="row">#</th>
         <th scope="col">Имя</th>
         <th scope="col">Фамилия</th>
         <th scope="col">Пол</th>
     </tr>
     </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-    </tr>
-    </tbody>
     <button type="button" class="btn btn-default" onclick="addRow()">Add row</button>
 </table>
 </body>
