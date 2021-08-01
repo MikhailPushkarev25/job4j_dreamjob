@@ -28,7 +28,8 @@
             data: 'email=' + $('#email').val(),
             dataType: 'text'
         }).done(function(data) {
-            $('email').before('<p>${data}</p>')
+            console.log();
+            $('email').before('<p>' + data + '</p>')
         }).fail(function(err){
             alert(err);
         });
