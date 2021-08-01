@@ -29,4 +29,6 @@ public interface Store {
 
     User findByEmail(String email);
 
+    Collection<String> findAllCity();
+
 }

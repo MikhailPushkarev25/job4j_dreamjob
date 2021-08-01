@@ -5,7 +5,8 @@ CREATE TABLE post (
 
 CREATE TABLE candidate (
     id SERIAL PRIMARY KEY,
-    name TEXT
+    name TEXT,
+    city int
 );
 
 CREATE TABLE users (
@@ -13,4 +14,9 @@ CREATE TABLE users (
             name TEXT,
             email TEXT,
             password TEXT
+);
+
+CREATE TABLE city (
+    id SERIAL PRIMARY KEY,
+    name text
 );

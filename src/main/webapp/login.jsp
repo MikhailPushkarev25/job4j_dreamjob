@@ -16,6 +16,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+    <script>
+        function validate() {
+            if ($('#email').val() === "") {
+                alert($('email').attr('title'));
+            }
+            if ($('#password').val() === "") {
+                alert($('password').attr('title'));
+            }
+        }
+    </script>
     <title>Работа мечты</title>
 </head>
 <body>
@@ -57,25 +67,15 @@
             <div class="card-body">
                 <form action="<%=request.getContextPath()%>/auth.do" method="post">
                     <div class="form-group">
-                        <label>Почта</label>
-                        <input type="text" class="form-control" name="email">
+                        <label for="name">Почта</label>
+                        <input type="text" class="form-control" name="email" title="Введите почту" id="name">
                     </div>
                     <div class="form-group">
-                        <label>Пароль</label>
-                        <input type="password" class="form-control" name="password">
+                        < <label for="password">Пароль</label>
+                        <input type="text" class="form-control" name="password" title="Enter password." id="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Войти</button>
-                    <c:if test="${requestScope.error != null}">
-                        <div style="color:red; font-weight: bold; margin: 30px 0;">
-                            <c:out value="${requestScope.error}"/>
-                        </div>
-                    </c:if>
-
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Войти</button>
                 </form>
-                <br>
-                <a href="<%=request.getContextPath()%>/reg.jsp" class="btn btn-success" role="button">
-                    Регистрация
-                </a>
             </div>
         </div>
     </div>

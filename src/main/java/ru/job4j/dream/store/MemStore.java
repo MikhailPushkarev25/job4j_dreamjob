@@ -24,13 +24,15 @@ public class MemStore implements Store {
 
     private final Map<Integer, User> users = new ConcurrentHashMap<>();
 
+    private final Map<Integer, String> city = new ConcurrentHashMap<>();
+
    private MemStore() {
         posts.put(1, new Post(1, "Junior Java Job"));
         posts.put(2, new Post(2, "Middle Java Job"));
         posts.put(3, new Post(3, "Senior Java Job"));
-        candidates.put(1, new Candidate(1, "Junior Java"));
-        candidates.put(2, new Candidate(2, "Middle Java"));
-        candidates.put(3, new Candidate(3, "Senior Java"));
+        candidates.put(1, new Candidate(1, "Junior Java", 1));
+        candidates.put(2, new Candidate(2, "Middle Java", 2));
+        candidates.put(3, new Candidate(3, "Senior Java", 3));
         users.put(1, new User(1, "Mike", "Log@mail", "123"));
         users.put(2, new User(2, "Lora", "lor@ref", "lora"));
         users.put(3, new User(3, "Frank", "fr@log", "frank"));
@@ -97,6 +99,11 @@ public class MemStore implements Store {
             }
         }
         return null;
+    }
+
+    @Override
+    public Collection<String> findAllCity() {
+        return city.values();
     }
 
     public void deleteCandidate(int id) {

@@ -18,11 +18,38 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+
+    <script>
+        function validate() {
+
+            if ($('#name').val() === '') {
+                alert($('#name').attr('title'));
+            }
+            return false;
+        }
+
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                crossdomain: true,
+                url: 'http://localhost:8080/dreamjob/city',
+                dataType: 'json'
+            }).done(function(data) {
+                console.log(data);
+                for (let i = 0; i < data.length; i++) {
+                    $('#idCity').append('<option value=' + data[i].id + '>' + data[i].name + '</option>');
+                }
+            }).fail(function(err){
+                alert(err);
+            });
+        });
+    </script>
     <title>Работа мечты</title>
 </head>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "");
+    Candidate candidate = new Candidate(0, "", 0);
     if (id != null) {
         candidate = PsqlStore.instOf().canFindById(Integer.parseInt(id));
     }
@@ -46,10 +73,16 @@
             <div class="card-body">
                     <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
                         <div class="form-group">
-                            <label>Имя кандидата</label>
-                            <input type="text" class="form-control" name="name">
+                            <label for="name">Имя</label>
+                            <input type="text" class="form-control" id="name"  value="<%=candidate.getName()%>" title="введите  имя">
                         </div>
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        < <div class="form-group">
+                        <label>Город</label>
+                        <select id="city">
+                            <option value="<%=candidate.getId()%>"></option>
+                        </select>
+                    </div>
+                        <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                     </form>
             </div>
         </div>

@@ -16,6 +16,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script>
+        function validate() {
+            if ($('#name').val() === "") {
+                alert($('name').attr('title'));
+            }
+            if ($('#email').val() === "") {
+                alert($('email').attr('title'));
+            }
+            if ($('#password').val() === "") {
+                alert($('password').attr('title'));
+            }
+        }
+    </script>
     <title>Работа мечты</title>
 </head>
 <body>
@@ -30,18 +44,18 @@
                     <tbody>
                     <form action="<%=request.getContextPath()%>/auth.do" method="post">
                         <div class="form-group">
-                            <label>Имя</label>
-                            <input type="text" class="form-control" name="name">
+                            <label for="name">Имя</label>
+                            <input type="text" class="form-control" name="name" title="Enter user name." id="name">
                         </div>
                         <div class="form-group">
-                            <label>Почта</label>
-                            <input type="text" class="form-control" name="email">
+                            <label for="email">Почта</label>
+                            <input type="text" class="form-control" name="email" title="Enter email." id="email">
                         </div>
                         <div class="form-group">
-                            <label>Пароль</label>
-                            <input type="text" class="form-control" name="password">
+                            <label for="password">Пароль</label>
+                            <input type="text" class="form-control" name="password" title="Enter password." id="password">
                         </div>
-            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                        <button type="submit" class="btn btn-primary" onclick="return validate();">Зарегистрироваться</button>
             <c:if test="${requestScope.error != null}">
                 <div style="color:red; font-weight: bold; margin: 30px 0;">
                     <c:out value="${requestScope.error}"/>
