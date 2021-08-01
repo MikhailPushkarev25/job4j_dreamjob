@@ -23,15 +23,19 @@
         }
 
         function addRow() {
-            //получаем значение поля usr
-            const name = $('name').val();
-            const surname = $('surname').val();
-            const sex = $('sex').val();
-            const description = $('description').val();
 
-            //Получаем ссылку на последний элемент в таблице
-            //и после него добавляем html
-            $('#table tr:last').after('<tr><td>' + name + '</td><td>' + surname + '</td><td>' + sex + '</td><td>' + description + '</td></tr>');
+            if (validate()) {
+                //получаем значение поля usr
+                const name = $('name').val();
+                const surname = $('surname').val();
+                const sex = $('sex').val();
+                const description = $('description').val();
+
+                //Получаем ссылку на последний элемент в таблице
+                //и после него добавляем html
+                $('#table tr:last').after('<tr><td>' + name + '</td><td>' + surname + '</td><td>' + sex + '</td><td>' + description + '</td></tr>');
+            }
+            return false
         }
     </script>
 </head>
