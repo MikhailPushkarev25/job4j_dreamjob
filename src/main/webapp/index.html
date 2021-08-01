@@ -12,16 +12,14 @@
 
            if ($('#name').val() === '') {
                alert($('#name').attr('title'));
-            }
-           if ($('#surname').val() === '') {
+            } else if ($('#surname').val() === '') {
                alert($('surname').attr('title'));
-           }
-           if ($('#sex').val() === '') {
+           } else if ($('#sex').val() === '') {
                alert($('sex').attr('title'));
-           }
-           if ($('#description').val() === '') {
+           }else if ($('#description').val() === '') {
                alert($('description').attr('description'));
            }
+           return false;
         }
 
         function addRow() {
